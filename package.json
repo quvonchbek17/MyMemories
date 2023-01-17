@@ -1,0 +1,27 @@
+{
+  "name": "mymemories",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon ./index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-fileupload": "^1.4.0",
+    "express-rate-limit": "^6.7.0",
+    "fs": "^0.0.1-security",
+    "joi": "^17.7.0",
+    "jsonwebtoken": "^9.0.0",
+    "path": "^0.12.7",
+    "pg": "^8.8.0",
+    "uuid": "^9.0.0"
+  }
+}
