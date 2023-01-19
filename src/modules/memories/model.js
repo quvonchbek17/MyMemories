@@ -1,10 +1,18 @@
 import PG from "../../utils/postgres.js"
 
 class memoriesModel extends PG{
-    async getMemoryById(id){
+
+    async getAllMemory(userId){
         return await this.fetchData(
-            `Select * from memories where memory_id = $1`,
-            id
+            `Select * from memories where user_id = $1`,
+            userId
+        )
+    }
+
+    async getMemoryById(id, userId){
+        return await this.fetchData(
+            `Select * from memories where memory_id = $1 and user_id = $2`,
+            id, userId
         )
     }
 
@@ -27,7 +35,7 @@ class memoriesModel extends PG{
 
     async updateMemory(title, desc, media, id){
         return this.fetchData(
-            `Update memories set updated_at = NOW(), memory_title = $1, memory_desc = $2, memory_media = $3,  where memory_id = $4`,
+            `Update memories set updated_at = NOW(), memory_title = $1, memory_desc = $2, memory_media = $3 where memory_id = $4`,
             title, desc, media, id
         )
     }

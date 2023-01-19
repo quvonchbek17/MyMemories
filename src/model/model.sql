@@ -79,6 +79,7 @@ CREATE TABLE files(
 CREATE TABLE archive_files(
     file_id uuid DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
     user_id uuid,
+    archive_id uuid,
     file_name VARCHAR(64),
     file_type VARCHAR(64),
     file_size VARCHAR(64),
@@ -106,7 +107,7 @@ AS
 $$
 BEGIN
 
-     INSERT INTO archive_users(archive_id, user_name, user_username, user_password, user_email, archive_created_at, archive_updated_at) VALUES(OLD.user_id, OLD.user_name, OLD.user_username, OLD.user_password, OLD.user_email, OLD.created_at, OLD.updated_at);
+     INSERT INTO archive_files(archive_id, user_name, user_username, user_password, user_email, archive_created_at, archive_updated_at) VALUES(OLD.user_id, OLD.user_name, OLD.user_username, OLD.user_password, OLD.user_email, OLD.created_at, OLD.updated_at);
     RETURN OLD;
 END
 $$;
@@ -117,3 +118,47 @@ AFTER DELETE
 ON users
 FOR EACH ROW
 EXECUTE PROCEDURE fnArchiveUser();
+
+
+------------- File Trigger -------------------------
+CREATE OR REPLACE FUNCTION fnArchiveFile()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS
+$$
+BEGIN
+
+     INSERT INTO archive_files(archive_id, user_id, file_name, file_type, file_size, file_url ,archive_created_at, archive_updated_at) VALUES(OLD.file_id, OLD.user_id, OLD.file_name, OLD.file_type, OLD.file_size, OLD.file_url, OLD.created_at, OLD.updated_at);
+     RETURN OLD;
+END
+$$;
+
+
+CREATE TRIGGER deleteFileTrigger
+AFTER DELETE
+ON files
+FOR EACH ROW
+EXECUTE PROCEDURE fnArchiveFile();
+
+
+-------------- Memories trigger --------------
+
+
+CREATE OR REPLACE FUNCTION fnArchiveMemory()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS
+$$
+BEGIN
+
+     INSERT INTO archive_memories(archive_id, user_id, memory_title, memory_desc, memory_media, archive_created_at, archive_updated_at) VALUES(OLD.memory_id, OLD.user_id, OLD.memory_title, OLD.memory_desc, OLD.memory_media, OLD.created_at, OLD.updated_at);
+     RETURN OLD;
+END
+$$;
+
+
+CREATE TRIGGER deleteMemoryTrigger
+AFTER DELETE
+ON memories
+FOR EACH ROW
+EXECUTE PROCEDURE fnArchiveMemory();
