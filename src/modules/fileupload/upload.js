@@ -49,7 +49,7 @@ export default class UsersController {
       }
 
       let fileName = v4() + "." + file.name.split(".").at(-1);
-      const [createdFile] = await model.postFile(user_id, file.name, file.mimetype, size, "http://localhost:7000/api/v1/files/" + fileName);
+      const [createdFile] = await model.postFile(user_id, file.name, file.mimetype, size, "https:/api.mymemories.uz/api/v1/files/" + fileName);
 
 
       await file.mv(__dirname + "/src/uploads/" + fileName, (err) => {
@@ -63,7 +63,7 @@ export default class UsersController {
           filename: file.name,
           type: file.mimetype,
           size: size,
-          url: "http://localhost:7000/api/v1/files/" + fileName
+          url: "https:/api.mymemories.uz/api/v1/files/" + fileName
         }
       });
 
