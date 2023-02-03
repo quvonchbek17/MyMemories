@@ -1,5 +1,5 @@
 import model from "./model.js";
-
+import { sign, verify } from "../../utils/jwt.js";
 
 
 export default class UsersController {
@@ -35,13 +35,23 @@ export default class UsersController {
     try {
 
        const { name, username, password, email } = req.body;
-       const created = await model.registerUser(name, username, password, email)
+       let created = await model.registerUser(name, username, password, email)
+
 
        if(created){
-            res.status(200).json({
-            success: true,
-            message: "Muvaffaqiyatli ro'yhatdan o'tdingiz !!!"
-            })
+        created = created[0]
+        let Token = sign(created.user_id);
+        res.status(200).json({
+          success: true,
+          message: "Muvaffaqiyatli ro'yhatdan o'tdingiz !",
+          data: {
+            id: created.user_id,
+            name: created.user_name,
+            username: created.user_username,
+            email: created.user_email
+          },
+          token: Token,
+        });
         } else {
             res.status(409).json({
             success: false,
@@ -108,4 +118,4 @@ export default class UsersController {
             next(error);
         }
     }
-}  
+}

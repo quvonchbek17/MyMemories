@@ -25,7 +25,7 @@ class usersModel extends PG{
     async registerUser(name, username, password, email){
 
         const created = await this.fetchData(
-            `Select * from users where user_username = $1 or user_email = $2`,
+            `Select * from users where user_username = $1 or user_email = $2 `,
             username, email
         );
 
@@ -33,7 +33,7 @@ class usersModel extends PG{
         return null;
       } else {
         return this.fetchData(
-            `Insert into users(user_name, user_username, user_password, user_email) values($1, $2, $3, $4)`,
+            `Insert into users(user_name, user_username, user_password, user_email) values($1, $2, $3, $4) RETURNING *`,
             name, username, password, email
         )
       }
