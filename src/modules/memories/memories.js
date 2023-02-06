@@ -157,7 +157,7 @@ export default class MemoryController {
     try {
       const { id, title, desc, media } = req.body;
       const { user_id } = req?.user;
-      const Data = await model.getMemoryById(id);
+      const Data = await model.getMemoryById(id, user_id);
       const oldData = Data[0];
       log(req.user)
       log(oldData)
