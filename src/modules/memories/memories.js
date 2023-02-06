@@ -1,5 +1,6 @@
 import model from "./model.js";
 import uploadModel from "../fileupload/model.js";
+import { log } from "console";
 
 export default class MemoryController {
   static async GetMemory(req, res, next) {
@@ -63,7 +64,7 @@ export default class MemoryController {
 
   static async GetAllMemory(req, res, next) {
     try {
-      const { user_id } = req.user;
+      const { user_id } = req?.user;
       let memories = await model.getAllMemory(user_id);
 
       if (memories.length > 0) {
@@ -156,7 +157,7 @@ export default class MemoryController {
     try {
       const { id, title, desc, media } = req.body;
       const { user_id } = req?.user;
-
+      log(req.user)
       const Data = await model.getMemoryById(id);
       const oldData = Data[0];
 
@@ -218,4 +219,3 @@ export default class MemoryController {
     }
   }
 }
-
