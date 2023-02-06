@@ -13,15 +13,19 @@ export default class MemoryController {
 
         if (typeof mediaIds === "object") {
           media = await Promise.all(
-            mediaIds.map(async (el) => {
-              let [file] = await uploadModel.getFileByID(el);
-              return {
-                id: file.file_id,
-                filename: file.file_name,
-                type: file.file_type,
-                size: file.file_size,
-                url: file.file_url,
-              };
+            mediaIds?.map(async (el) => {
+              try{
+                let [file] = await uploadModel.getFileByID(el);
+                return {
+                  id: file.file_id,
+                  filename: file.file_name,
+                  type: file.file_type,
+                  size: file.file_size,
+                  url: file.file_url,
+                };
+              } catch {
+                return null
+              }
             })
           );
         } else {
@@ -69,15 +73,19 @@ export default class MemoryController {
 
             if (typeof mediaIds === "object") {
               media = await Promise.all(
-                mediaIds.map(async (el) => {
-                  let [file] = await uploadModel.getFileByID(el);
-                  return {
+                mediaIds?.map(async (el) => {
+                  try {
+                    let [file] = await uploadModel.getFileByID(el);
+                    return {
                     id: file.file_id,
                     filename: file.file_name,
                     type: file.file_type,
                     size: file.file_size,
                     url: file.file_url,
                   };
+                  } catch {
+                    return null
+                  }
                 })
               );
             } else {
@@ -147,12 +155,12 @@ export default class MemoryController {
   static async UpdateMemory(req, res, next) {
     try {
       const { id, title, desc, media } = req.body;
-      const { user_id } = req.user;
+      const { user_id } = req?.user;
 
       const Data = await model.getMemoryById(id);
       const oldData = Data[0];
 
-      if (oldData.user_id != user_id) {
+      if (oldData?.user_id != user_id) {
         res.status(401).json({
           success: false,
           message:
@@ -211,4 +219,3 @@ export default class MemoryController {
   }
 }
 
-console

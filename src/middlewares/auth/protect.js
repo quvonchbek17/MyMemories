@@ -17,6 +17,7 @@ const protect = async(req, res, next) => {
         success: false,
         message: "Foydalanish uchun tizimga kiring !"
       })
+      return
     }
 
     const decodedToken = verify(authToken, process.env.SECRET_KEY);
@@ -26,6 +27,7 @@ const protect = async(req, res, next) => {
         success: false,
         message: "Tokenda muammo bor !"
       })
+      return
     }
 
     const user = await model.userById(decodedToken)
@@ -35,6 +37,7 @@ const protect = async(req, res, next) => {
         success: false,
         message: "User topilmadi !"
       })
+      return
     }
 
     req.user = user[0];
