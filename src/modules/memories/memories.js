@@ -1,6 +1,5 @@
 import model from "./model.js";
 import uploadModel from "../fileupload/model.js";
-import { log } from "console";
 
 export default class MemoryController {
   static async GetMemory(req, res, next) {
@@ -17,6 +16,9 @@ export default class MemoryController {
             mediaIds?.map(async (el) => {
               try{
                 let [file] = await uploadModel.getFileByID(el);
+                if(!file?.file_id){
+                  return null
+                }
                 return {
                   id: file.file_id,
                   filename: file.file_name,
@@ -31,6 +33,9 @@ export default class MemoryController {
           );
         } else {
           let [file] = await uploadModel.getFileByID(mediaIds);
+          if(!file?.file_id){
+            return
+          }
           media.push({
             id: file.file_id,
             filename: file.file_name,
@@ -77,6 +82,9 @@ export default class MemoryController {
                 mediaIds?.map(async (el) => {
                   try {
                     let [file] = await uploadModel.getFileByID(el);
+                    if(!file?.file_id){
+                      return null
+                    }
                     return {
                     id: file.file_id,
                     filename: file.file_name,
@@ -91,6 +99,9 @@ export default class MemoryController {
               );
             } else {
               let [file] = await uploadModel.getFileByID(mediaIds);
+              if(!file?.file_id){
+                return
+              }
               media.push({
                 id: file.file_id,
                 filename: file.file_name,
@@ -141,6 +152,9 @@ export default class MemoryController {
                 mediaIds?.map(async (el) => {
                   try {
                     let [file] = await uploadModel.getFileByID(el);
+                    if(!file?.file_id){
+                      return null
+                    }
                     return {
                     id: file.file_id,
                     filename: file.file_name,
@@ -155,6 +169,9 @@ export default class MemoryController {
               );
             } else {
               let [file] = await uploadModel.getFileByID(mediaIds);
+              if(!file?.file_id){
+                return
+              }
               media.push({
                 id: file.file_id,
                 filename: file.file_name,
@@ -204,6 +221,9 @@ export default class MemoryController {
                 mediaIds?.map(async (el) => {
                   try {
                     let [file] = await uploadModel.getFileByID(el);
+                    if(!file?.file_id){
+                      return null
+                    }
                     return {
                     id: file.file_id,
                     filename: file.file_name,
@@ -218,6 +238,9 @@ export default class MemoryController {
               );
             } else {
               let [file] = await uploadModel.getFileByID(mediaIds);
+              if(!file?.file_id){
+                return
+              }
               media.push({
                 id: file.file_id,
                 filename: file.file_name,
