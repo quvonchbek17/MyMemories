@@ -101,7 +101,7 @@ export default class MemoryController {
                 })
               );
             } else {
-              let [file] = await uploadModel.getFileByID(mediaIds);
+              let [file] = await uploadModel.getFileByID(JSON.parse(JSON.parse(mediaIds)));
               if(!file?.file_id){
                 return
               }
@@ -171,7 +171,7 @@ export default class MemoryController {
                 })
               );
             } else {
-              let [file] = await uploadModel.getFileByID(mediaIds);
+              let [file] = await uploadModel.getFileByID(JSON.parse(mediaIds));
               if(!file?.file_id){
                 return
               }
@@ -240,7 +240,7 @@ export default class MemoryController {
                 })
               );
             } else {
-              let [file] = await uploadModel.getFileByID(mediaIds);
+              let [file] = await uploadModel.getFileByID(JSON.parse(mediaIds));
               if(!file?.file_id){
                 return
               }
