@@ -29,6 +29,8 @@ CREATE TABLE memories(
     memory_title TEXT,
     memory_desc TEXT,
     memory_media TEXT,
+    memory_like BOOLEAN DEFAULT FALSE,
+    memory_dislike BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );

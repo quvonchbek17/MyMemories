@@ -9,6 +9,20 @@ class memoriesModel extends PG{
         )
     }
 
+    async getAllLikes(userId){
+        return await this.fetchData(
+            `Select * from memories where user_id = $1 and memory_like = $2`,
+            userId, true
+        )
+    }
+
+    async getAllDislikes(userId){
+        return await this.fetchData(
+            `Select * from memories where user_id = $1 and memory_dislike = $2`,
+            userId, true
+        )
+    }
+
     async getMemoryById(id, userId){
         return await this.fetchData(
             `Select * from memories where memory_id = $1 and user_id = $2`,
@@ -33,10 +47,10 @@ class memoriesModel extends PG{
       }
     }
 
-    async updateMemory(title, desc, media, id){
+    async updateMemory(title, desc, media, like, dislike, id){
         return this.fetchData(
-            `Update memories set updated_at = NOW(), memory_title = $1, memory_desc = $2, memory_media = $3 where memory_id = $4`,
-            title, desc, media, id
+            `Update memories set updated_at = NOW(), memory_title = $1, memory_desc = $2, memory_media = $3, memory_like = $4, memory_dislike = $5 where memory_id = $6`,
+            title, desc, media, like, dislike, id
         )
     }
 
