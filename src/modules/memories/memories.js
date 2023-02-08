@@ -81,7 +81,9 @@ export default class MemoryController {
               media = await Promise.all(
                 mediaIds?.map(async (el) => {
                   try {
+                    console.log(el)
                     let [file] = await uploadModel.getFileByID(el);
+                    console.log(file)
                     if(!file?.file_id){
                       return null
                     }
