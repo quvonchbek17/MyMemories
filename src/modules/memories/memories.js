@@ -71,6 +71,7 @@ export default class MemoryController {
     try {
       const { user_id } = req?.user;
       let memories = await model.getAllMemory(user_id);
+      console.log(memories)
 
       if (memories.length > 0) {
         memories = await Promise.all(memories.map(async (memory) => {
