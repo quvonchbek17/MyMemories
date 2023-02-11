@@ -10,17 +10,6 @@ CREATE TABLE users(
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-CREATE TABLE archive_users(
-    user_id uuid DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
-    archive_id uuid ,
-    user_name VARCHAR(64),
-    user_username VARCHAR(64),
-    user_password VARCHAR(64),
-    user_email VARCHAR(256),
-    archive_created_at TIMESTAMPTZ NOT NULL,
-    archive_updated_at TIMESTAMPTZ NOT NULL,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-);
 
 
 CREATE TABLE memories(
@@ -35,17 +24,6 @@ CREATE TABLE memories(
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-CREATE TABLE archive_memories(
-    memory_id uuid DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
-    archive_id uuid,
-    user_id uuid,
-    memory_title TEXT,
-    memory_desc TEXT,
-    memory_media TEXT,
-    archive_created_at TIMESTAMPTZ NOT NULL,
-    archive_updated_at TIMESTAMPTZ NOT NULL,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-);
 
 CREATE TABLE categories(
     category_id uuid DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
@@ -56,37 +34,16 @@ CREATE TABLE categories(
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-CREATE TABLE archive_categories(
-    category_id uuid DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
-    archive_id uuid,
-    user_id uuid,
-    category_name VARCHAR(256),
-    category_datas TEXT,
-    archive_created_at TIMESTAMPTZ NOT NULL,
-    archive_updated_at TIMESTAMPTZ NOT NULL,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-);
-
 
 CREATE TABLE files(
     file_id uuid DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
-    file_name VARCHAR(64),
-    file_type VARCHAR(64),
+    file_name VARCHAR(255),
+    file_type VARCHAR(255),
     user_id uuid,
-    file_size VARCHAR(64),
+    file_size VARCHAR(255),
     file_url TEXT,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-);
-
-CREATE TABLE archive_files(
-    file_id uuid DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
-    user_id uuid,
-    archive_id uuid,
-    file_name VARCHAR(64),
-    file_type VARCHAR(64),
-    file_size VARCHAR(64),
-    file_url TEXT,
-    archive_created_at TIMESTAMPTZ NOT NULL,
+    upload_name TEXT,
+    playlist BOOLEAN,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 

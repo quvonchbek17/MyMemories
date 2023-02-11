@@ -10,7 +10,7 @@ export const updateMemory = Joi.object().keys({
     id: Joi.string().required() ,
     title: Joi.string(),
     desc: Joi.string(),
-    media: Joi.alternatives().try(Joi.array().items(Joi.string()), Joi.string()),
+    media: Joi.alternatives().try(Joi.array().items(Joi.string())),
     like: Joi.boolean(),
     dislike: Joi.boolean()
 })

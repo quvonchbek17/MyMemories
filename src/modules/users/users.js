@@ -59,6 +59,7 @@ export default class UsersController {
             })
         }
     } catch (error) {
+        console.log(error)
         next(error);
     }
   }
@@ -105,12 +106,24 @@ export default class UsersController {
                 });
                 return;
             } else {
+                let files = await model.getUserFiles(user_id);
+                let mediaNames =  await Promise.all(files?.map(async (file) => {
+                    console.log(file);
+                    try {
+                      if(!file?.file_id){
+                        return null
+                      }
+                      return file.upload_name;
+                    } catch(error) {
+                      return null
+                    }
+                  }))
+                await model.DeleteUserFiles(user_id)
+                await model.DeleteUserMemories(user_id)
                 await model.deleteUser(user_id)
 
-                res.status(200).json({
-                success:true,
-                message: "Akkauntingiz o'chirildi ! Qayta tiklash uchun adminga murojaat qiling !!"
-                });
+                req.mediaNames = mediaNames;
+                next();
             }
 
 

@@ -71,20 +71,17 @@ export default class MemoryController {
     try {
       const { user_id } = req?.user;
       let memories = await model.getAllMemory(user_id);
-      console.log(memories)
 
       if (memories.length > 0) {
         memories = await Promise.all(memories.map(async (memory) => {
             let mediaIds = JSON.parse(memory.memory_media);
             let media = [];
 
-            if (typeof mediaIds === "object") {
+            if(mediaIds.length > 0){
               media = await Promise.all(
                 mediaIds?.map(async (el) => {
                   try {
-                    console.log(el)
                     let [file] = await uploadModel.getFileByID(el);
-                    console.log(file)
                     if(!file?.file_id){
                       return null
                     }
@@ -100,19 +97,8 @@ export default class MemoryController {
                   }
                 })
               );
-            } else {
-              let [file] = await uploadModel.getFileByID(JSON.parse(JSON.parse(mediaIds)));
-              if(!file?.file_id){
-                return
-              }
-              media.push({
-                id: file.file_id,
-                filename: file.file_name,
-                type: file.file_type,
-                size: file.file_size,
-                url: file.file_url,
-              });
             }
+
 
             return {
               id: memory.memory_id,
@@ -150,7 +136,7 @@ export default class MemoryController {
             let mediaIds = JSON.parse(memory.memory_media);
             let media = [];
 
-            if (typeof mediaIds === "object") {
+            if(mediaIds.length > 0) {
               media = await Promise.all(
                 mediaIds?.map(async (el) => {
                   try {
@@ -170,18 +156,6 @@ export default class MemoryController {
                   }
                 })
               );
-            } else {
-              let [file] = await uploadModel.getFileByID(JSON.parse(mediaIds));
-              if(!file?.file_id){
-                return
-              }
-              media.push({
-                id: file.file_id,
-                filename: file.file_name,
-                type: file.file_type,
-                size: file.file_size,
-                url: file.file_url,
-              });
             }
 
             return {
@@ -219,7 +193,7 @@ export default class MemoryController {
             let mediaIds = JSON.parse(memory.memory_media);
             let media = [];
 
-            if (typeof mediaIds === "object") {
+            if (mediaIds.length > 0) {
               media = await Promise.all(
                 mediaIds?.map(async (el) => {
                   try {
@@ -239,18 +213,6 @@ export default class MemoryController {
                   }
                 })
               );
-            } else {
-              let [file] = await uploadModel.getFileByID(JSON.parse(mediaIds));
-              if(!file?.file_id){
-                return
-              }
-              media.push({
-                id: file.file_id,
-                filename: file.file_name,
-                type: file.file_type,
-                size: file.file_size,
-                url: file.file_url,
-              });
             }
 
             return {
@@ -321,7 +283,7 @@ export default class MemoryController {
         return;
       }
 
-      if(like && dislike){
+      if(like && dislike || (oldData.memory_like && dislike) || (oldData.memory_dislike && like)){
         res.status(400).json({
           success: false,
           message:
@@ -370,11 +332,20 @@ export default class MemoryController {
         return;
       } else {
         await model.deleteMemory(id);
-
-        res.status(200).json({
-          success: true,
-          message: "Ma'lumot o'chirildi",
-        });
+        let mediaIds = JSON.parse(oldData.memory_media)
+        let mediaNames =  await Promise.all(mediaIds?.map(async (el) => {
+          try {
+            let [file] = await uploadModel.getFileByID(el);
+            if(!file?.file_id){
+              return null
+            }
+            return file.upload_name;
+          } catch(error) {
+            return null
+          }
+        }))
+        req.mediaNames = mediaNames;
+        next();
       }
     } catch (error) {
       next(error);

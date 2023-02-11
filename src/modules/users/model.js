@@ -8,9 +8,30 @@ class usersModel extends PG{
         )
     }
 
-    async getUserByName(username){
+    // async getUserByName(username){
+    //     return await this.fetchData(
+    //         `Select * from users where user_username = $1`,
+    //         username
+    //     )
+    // }
+
+    async DeleteUserMemories(id){
         return await this.fetchData(
-            `Select * from users where user_username = $1`,
+            `Delete from memories where user_id = $1`,
+            id
+        )
+    }
+
+    async getUserFiles(id){
+        return await this.fetchData(
+            `Select * from files where user_id = $1`,
+            id
+        )
+    }
+
+    async DeleteUserFiles(id){
+        return await this.fetchData(
+            `Delete from files where user_id = $1`,
             id
         )
     }
