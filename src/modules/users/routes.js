@@ -15,8 +15,8 @@ const UsersRouter = Router();
 
 
 UsersRouter.get("/", protect, GetUser);
-UsersRouter.post("/register", validate(registerUser), AddUser);
-UsersRouter.put("/", protect, validate(updateUser), UpdateUser);
+UsersRouter.post("/register",  AddUser);
+UsersRouter.put("/", protect,  UpdateUser);
 UsersRouter.delete("/deleteaccount", protect,  DeleteUser, DeleteFile);
 
 

@@ -17,8 +17,8 @@ MemoriesRouter.get("/all", protect, GetAllMemory);
 MemoriesRouter.get("/likes", protect, GetAllLikes);
 MemoriesRouter.get("/dislikes", protect, GetAllDislikes);
 MemoriesRouter.get("/:id", protect, GetMemory);
-MemoriesRouter.post("/", protect, validate(postMemory), AddMemory);
-MemoriesRouter.put("/", protect, validate(updateMemory), UpdateMemory);
+MemoriesRouter.post("/", protect, AddMemory);
+MemoriesRouter.put("/", protect, UpdateMemory);
 MemoriesRouter.delete("/:id", protect,  DeleteMemory, DeleteFile);
 
 
