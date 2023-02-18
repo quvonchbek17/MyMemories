@@ -31,7 +31,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")))
 
 // upload middleware
 app.use(fileUpload({
-  limits: { fileSize: 8 * 6 * 1024 * 1024 },
+  limits: { fileSize: 6 * 1024 * 1024 },
   abortOnLimit: true,
 }))
 app.use(errorMiddleware)
