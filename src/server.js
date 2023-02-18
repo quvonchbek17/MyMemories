@@ -12,6 +12,9 @@ const __dirname = path.resolve();
 
 const app = express()
 
+// Cors middleware
+app.use(cors({ origin: "*" }))
+
 // Limiter
 
 const limiter = rateLimit({
@@ -29,15 +32,13 @@ app.use(express.urlencoded({ extended: true }))
 // Static folders
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
 
+
 // upload middleware
 app.use(fileUpload({
   limits: { fileSize: 6 * 1024 * 1024 },
   abortOnLimit: true,
 }))
 app.use(errorMiddleware)
-
-// Cors middleware
-app.use(cors({ origin: "*" }))
 
 // Routes
 app.use("/api/v1", api)
