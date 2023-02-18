@@ -72,6 +72,7 @@ export default class UsersController {
     try {
       const { file } = req.files;
       const { user_id } = req.user;
+      
       const playlist = req.url.split("/").at(-1) === "playlist" ? true : false
       let size = ""
       if(file){
@@ -80,7 +81,7 @@ export default class UsersController {
         res.status(400).json({
             success: false,
             message: "File yuklang !!"
-          });
+        });
       }
 
       let fileName = v4() + "." + file.name.split(".").at(-1);
