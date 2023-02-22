@@ -306,8 +306,8 @@ export default class MemoryController {
       const Title = title ? title : oldData.memory_title;
       const Desc = desc ? desc : oldData.memory_desc;
       const Media = media ? JSON.stringify(media) : oldData.memory_media;
-      const Like = like ? like : oldData.memory_like;
-      const Dislike = dislike ? dislike : oldData.memory_dislike;
+      const Like = like !== undefined ? like : oldData.memory_like;
+      const Dislike = dislike !==undefined ? dislike : oldData.memory_dislike;
       await model.updateMemory(Title, Desc, Media, Like, Dislike, id);
 
       res.status(200).json({
