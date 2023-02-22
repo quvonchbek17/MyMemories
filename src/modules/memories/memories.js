@@ -24,7 +24,7 @@ export default class MemoryController {
                   filename: file.file_name,
                   type: file.file_type,
                   size: file.file_size,
-                  url: file.file_url,
+                  url: file.file_url
                 };
               } catch {
                 return null
@@ -51,6 +51,8 @@ export default class MemoryController {
             id: memory.memory_id,
             title: memory.memory_title,
             desc: memory.memory_desc,
+            like: memory.memory_like,
+            dislike: memory.memory_dislike,
             created_at: memory.created_at,
             files: media,
           },
@@ -104,6 +106,8 @@ export default class MemoryController {
               id: memory.memory_id,
               title: memory.memory_title,
               desc: memory.memory_desc,
+              like: memory.memory_like,
+              dislike: memory.memory_dislike,
               created_at: memory.created_at,
               files: media,
             };
