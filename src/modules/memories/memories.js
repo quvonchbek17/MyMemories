@@ -287,7 +287,7 @@ export default class MemoryController {
         return;
       }
 
-      if(like && dislike || (oldData.memory_like && dislike) || (oldData.memory_dislike && like)){
+      if(like && dislike || (oldData.memory_like && dislike && like !== false) || (oldData.memory_dislike && like && dislike !== false)){
         res.status(400).json({
           success: false,
           message:
