@@ -166,6 +166,8 @@ export default class MemoryController {
               id: memory.memory_id,
               title: memory.memory_title,
               desc: memory.memory_desc,
+              like: memory.memory_like,
+              dislike: memory.memory_dislike,
               created_at: memory.created_at,
               files: media,
             };
@@ -223,6 +225,8 @@ export default class MemoryController {
               id: memory.memory_id,
               title: memory.memory_title,
               desc: memory.memory_desc,
+              like: memory.memory_like,
+              dislike: memory.memory_dislike,
               created_at: memory.created_at,
               files: media,
             };

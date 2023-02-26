@@ -4,21 +4,21 @@ class memoriesModel extends PG{
 
     async getAllMemory(userId){
         return await this.fetchData(
-            `Select * from memories where user_id = $1`,
+            `Select * from memories where user_id = $1 ORDER BY created_at DESC`,
             userId
         )
     }
 
     async getAllLikes(userId){
         return await this.fetchData(
-            `Select * from memories where user_id = $1 and memory_like = $2`,
+            `Select * from memories where user_id = $1 and memory_like = $2 ORDER BY created_at DESC`,
             userId, true
         )
     }
 
     async getAllDislikes(userId){
         return await this.fetchData(
-            `Select * from memories where user_id = $1 and memory_dislike = $2`,
+            `Select * from memories where user_id = $1 and memory_dislike = $2 ORDER BY created_at DESC`,
             userId, true
         )
     }
