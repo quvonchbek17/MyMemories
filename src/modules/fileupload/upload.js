@@ -72,7 +72,7 @@ export default class UsersController {
     try {
       const { file } = req.files;
       const { user_id } = req.user;
-      
+
       const playlist = req.url.split("/").at(-1) === "playlist" ? true : false
       let size = ""
       if(file){
@@ -85,7 +85,7 @@ export default class UsersController {
       }
 
       let fileName = v4() + "." + file.name.split(".").at(-1);
-      const [createdFile] = await model.postFile(user_id, file.name, file.mimetype, size, fileName, "https:/api.mymemories.uz/api/v1/files/" + fileName, playlist);
+      const [createdFile] = await model.postFile(user_id, file.name, file.mimetype, size, fileName, "https://api.mymemories.uz/api/v1/files/" + fileName, playlist);
 
 
       await file.mv(__dirname + "/src/uploads/" + fileName, (err) => {
