@@ -5,13 +5,13 @@ import model from "./model.js";
 const __dirname = path.resolve();
 
 
-export default class UsersController {
+export default class FileUploadController {
 
   static async GetFile(req, res, next) {
     try {
       const { name } = req.params;
 
-      fs.readFile(path.join(__dirname, "/src/uploads/", name), (err, data) => {
+      fs.readFile(path.join(process.cwd(), "..","uploads", name), (err, data) => {
         if (err) {
           res.status(200).json({
             success: false,
@@ -19,7 +19,7 @@ export default class UsersController {
           });
         } else {
           res.sendFile(
-            path.join(__dirname, "/src/uploads/", name),
+            path.join(process.cwd(), "..","uploads", name),
             function (err) {
               if (err) {
                 next(err);
@@ -88,7 +88,7 @@ export default class UsersController {
       const [createdFile] = await model.postFile(user_id, file.name, file.mimetype, size, fileName, "https://api.mymemories.uz/api/v1/files/" + fileName, playlist);
 
 
-      await file.mv(__dirname + "/src/uploads/" + fileName, (err) => {
+      await file.mv(path.join(process.cwd(), "..","uploads", fileName), (err) => {
         if (err) throw err;
       });
 
@@ -113,7 +113,7 @@ export default class UsersController {
       const mediaNames = req.mediaNames;
 
       await mediaNames?.filter(name => name).map(name => {
-        fs.unlink(__dirname + "/src/uploads/" + name, (err) => {
+        fs.unlink(path.join(process.cwd(), "..","uploads", name), (err) => {
           if (err) {
               throw err;
           }
